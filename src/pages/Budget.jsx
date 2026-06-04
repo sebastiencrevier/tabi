@@ -7,7 +7,7 @@ import { AlertTriangle, Check, Edit3, Plus, Trash2, TrendingUp, Users, Wallet } 
 import { Btn } from "../components/ui/Btn.jsx";
 import { Card } from "../components/ui/Card.jsx";
 import { Donut, Empty, Field, Modal, Pill, Progress, SectionTitle } from "../components/ui/index.jsx";
-import { CATS, PEOPLE, T } from "../constants.js";
+import { CATS, PEOPLE, PERSON_COLOR, T } from "../constants.js";
 import { fmt, uid } from "../lib/helpers.js";
 
 export function Budget({ data, set, totalSpent }) {
