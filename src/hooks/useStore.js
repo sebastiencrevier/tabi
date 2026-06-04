@@ -10,7 +10,6 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { supa } from "../lib/supabase.js";
-import { TRIP_ID } from "../config.js";
 import { mergeWithSeed, humanizeSupaError } from "../lib/helpers.js";
 
 export function useStore(key, initial) {
@@ -58,7 +57,7 @@ export function useStore(key, initial) {
         const { data, error } = await supa
           .from("trips")
           .select("content, updated_at")
-          .eq("id", TRIP_ID)
+          .eq("id", import.meta.env.VITE_TRIP_ID)
           .maybeSingle();
         if (error) {
           console.error("Supabase load error:", error);
@@ -77,7 +76,7 @@ export function useStore(key, initial) {
             try {
               const stamp = new Date().toISOString();
               await supa.from("trips").upsert({
-                id: TRIP_ID,
+                id: import.meta.env.VITE_TRIP_ID,
                 content: initial,
                 updated_at: stamp,
               });
@@ -109,7 +108,7 @@ export function useStore(key, initial) {
           const { data: meta, error: e1 } = await supa
             .from("trips")
             .select("updated_at")
-            .eq("id", TRIP_ID)
+            .eq("id", import.meta.env.VITE_TRIP_ID)
             .maybeSingle();
           if (e1) {
             consecutiveErrors++;
@@ -124,7 +123,7 @@ export function useStore(key, initial) {
           const { data, error: e2 } = await supa
             .from("trips")
             .select("content, updated_at")
-            .eq("id", TRIP_ID)
+            .eq("id", import.meta.env.VITE_TRIP_ID)
             .maybeSingle();
           if (e2 || !data || !data.content) return;
           lastSeen.current = data.updated_at;
@@ -144,20 +143,22 @@ export function useStore(key, initial) {
           tick();
         }
       };
-      if (typeof document !== "undefined")
+      
+      if (typeof document !== "undefined") {
         document.addEventListener("visibilitychange", onVisible);
-      const cleanupVisibility = () => {
-        if (typeof document !== "undefined")
-          document.removeEventListener("visibilitychange", onVisible);
-      };
-      timer.__cleanup = cleanupVisibility;
+      }
     }
+
     return () => {
       alive = false;
       clearTimeout(watchdog);
+
       if (timer) {
         clearInterval(timer);
-        if (timer.__cleanup) timer.__cleanup();
+      }
+
+      if (typeof document !== "undefined") {
+        document.removeEventListener("visibilitychange", onVisible);
       }
     };
   }, [key]);
@@ -177,7 +178,7 @@ export function useStore(key, initial) {
           const stamp = new Date().toISOString();
           const { error } = await supa
             .from("trips")
-            .upsert({ id: TRIP_ID, content: next, updated_at: stamp });
+            .upsert({ id: import.meta.env.VITE_TRIP_ID, content: next, updated_at: stamp });
           if (error) {
             console.error("save cloud", error);
             setCloud({ status: "error", detail: humanizeSupaError(error) });

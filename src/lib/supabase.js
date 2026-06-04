@@ -5,7 +5,6 @@
 // ============================================================
 
 import { createClient } from "@supabase/supabase-js";
-import { SUPABASE_URL, SUPABASE_KEY } from "../config.js";
 
 function looksLikeValidConfig(url, key) {
   if (typeof url !== "string" || typeof key !== "string") return false;
@@ -16,12 +15,12 @@ function looksLikeValidConfig(url, key) {
   return true;
 }
 
-export const SUPA_CONFIG_OK = looksLikeValidConfig(SUPABASE_URL, SUPABASE_KEY);
+export const SUPA_CONFIG_OK = looksLikeValidConfig(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY);
 
 let _supa = null;
 try {
   if (SUPA_CONFIG_OK) {
-    _supa = createClient(SUPABASE_URL.trim(), SUPABASE_KEY.trim());
+    _supa = createClient(import.meta.env.VITE_SUPABASE_URL.trim(), import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY.trim());
   }
 } catch (e) {
   console.error("Init Supabase impossible :", e);

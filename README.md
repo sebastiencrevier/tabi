@@ -33,12 +33,12 @@ npm run preview
 
 ## ☁️ Configuration Supabase
 
-Modifie `src/config.js` avec **tes propres** URL et clé Supabase :
+Clone `.env.example` en `.env.local` et remplis avec **tes propres** URL et clé Supabase :
 
-```js
-export const SUPABASE_URL = "https://xxxxxxxx.supabase.co";
-export const SUPABASE_KEY = "sb_publishable_..."; // ou eyJ...
-export const TRIP_ID = "voyage-japon";
+```env
+VITE_SUPABASE_URL=https://xxxxxxxx.supabase.co
+VITE_SUPABASE_PUBLISHABLE_KEY=sb_publishable_... // ou eyJ...
+VITE_TRIP_ID=voyage-japon
 ```
 
 Où trouver ces valeurs : Dashboard Supabase → ⚙️ Settings → API.
@@ -76,7 +76,6 @@ tabi-japon/
 └── src/
     ├── main.jsx             # Point d'entrée — monte React dans #root
     ├── App.jsx              # Composant racine — sidebar + routing pages
-    ├── config.js            # URL/clé Supabase, ID du voyage
     ├── constants.js         # Palette, catégories, statuts, voyageurs, citations
     ├── data/
     │   └── seed.js          # Données initiales (villes, activités, etc.)
