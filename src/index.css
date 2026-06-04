@@ -1,0 +1,152 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Outfit:wght@400;500;600;700&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Outfit", sans-serif;
+  --font-serif: "Fraunces", serif;
+
+  --color-paper: #faf8f5;
+  --color-paper2: #f2eee8;
+  --color-card: #ffffff;
+  --color-ink: #1c1a17;
+  --color-ink2: #56514a;
+  --color-ink3: #9a9389;
+  --color-line: #e8e2d9;
+  --color-vermilion: #c8443b;
+  --color-verm-soft: #f5e3e0;
+  --color-matcha: #6e7f5c;
+  --color-matcha-soft: #e8ede2;
+  --color-gold: #b8893e;
+  --color-gold-soft: #f4ecdd;
+  --color-indigo: #3f5169;
+  --color-indigo-soft: #e3e8ee;
+
+  --shadow-sm: 0 1px 2px rgba(28, 26, 23, 0.04), 0 1px 3px rgba(28, 26, 23, 0.03);
+  --shadow-md: 0 2px 8px rgba(28, 26, 23, 0.05), 0 6px 20px rgba(28, 26, 23, 0.05);
+  --shadow-lg: 0 8px 30px rgba(28, 26, 23, 0.08), 0 20px 50px rgba(28, 26, 23, 0.06);
+
+  --animate-tabi-fade: tabiFade 0.2s ease;
+  --animate-tabi-pop: tabiPop 0.26s cubic-bezier(0.2, 0.8, 0.3, 1);
+  --animate-tabi-slide: tabiSlide 0.35s cubic-bezier(0.2, 0.8, 0.3, 1);
+  --animate-tabi-pulse: tabiPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes tabiFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes tabiPop {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes tabiSlide {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes tabiPulse {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ── Base ─────────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+::selection {
+  background: var(--color-verm-soft);
+}
+
+input,
+select,
+textarea {
+  font-family: var(--font-sans);
+}
+
+/* ── Scrollbar ────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-line);
+  border-radius: 99px;
+  border: 3px solid var(--color-paper);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-ink3);
+}
+
+/* ── Tabi utility classes ────────────────────────────── */
+.tabi-row:hover {
+  background: var(--color-paper2) !important;
+}
+.tabi-del {
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.tabi-row:hover .tabi-del,
+.tabi-trow:hover .tabi-del,
+*:hover > .tabi-del {
+  opacity: 1;
+}
+
+.tabi-trow:hover {
+  background: var(--color-paper);
+}
+
+.tabi-bottomnav::-webkit-scrollbar {
+  display: none;
+}
+.tabi-bottomnav {
+  scrollbar-width: none;
+}
+
+/* ── Responsive ───────────────────────────────────────── */
+@media (max-width: 860px) {
+  .tabi-2col {
+    grid-template-columns: 1fr !important;
+  }
+  .tabi-table {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tabi-thead,
+  .tabi-trow {
+    min-width: 580px;
+  }
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+  .tabi-cardgrid {
+    grid-template-columns: 1fr !important;
+  }
+}
